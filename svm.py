@@ -60,10 +60,22 @@ if __name__ == "__main__":
    for x, y in zip(X_test, y_test):
       x = x.reshape(1, -1)
       prediction = svm.predict(x)[0]
-
       if y == prediction:
          right += 1
       total += 1
 
    accuracy = float(right) / float(total) * 100
    print str(accuracy) + "% accuracy"
+
+   print "Manual Testing\n"
+   print "Enter path of the image."
+   while True:
+      try:
+         path = raw_input()
+         if not os.path.isfile(path):
+            print "Error: " + path + " does not exist."
+         imageFeature = extractFeaturesFromImage(path)
+         imageFeature = imageFeature.reshape(1, -1)
+         print path + " : " + svm.predict(imageFeature)[0]
+      except EOFError as e:
+          break
